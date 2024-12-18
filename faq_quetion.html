@@ -9,21 +9,16 @@
       font-family: Arial, sans-serif;
       line-height: 1.6;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       background-color: #f4f4f4;
     }
-    header {
-      background-color: #6200ee;
-      color: #fff;
-      padding: 1rem 2rem;
-      text-align: center;
-    }
-    main {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     h1, h2 {
@@ -42,54 +37,84 @@
       margin-left: 20px;
       color: #333;
     }
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #6200ee;
-      color: #fff;
-      margin-top: 20px;
+    .divider {
+      height: 1px;
+      background-color: #ddd;
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Perguntas Frequentes - LitokShop</h1>
-  </header>
-  <main>
-    <div class="faq-item">
-      <div class="faq-question">1. O que é o LitokShop?</div>
-      <div class="faq-answer">LitokShop é um aplicativo de compras online que oferece uma ampla variedade de produtos com preços acessíveis e entrega rápida.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">2. Como faço para criar uma conta?</div>
-      <div class="faq-answer">Você pode criar uma conta clicando em "Registrar" na página inicial do aplicativo e preenchendo os dados solicitados.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">3. Quais métodos de pagamento são aceitos?</div>
-      <div class="faq-answer">Aceitamos pagamentos via cartão de crédito, transferência bancária e métodos digitais como PayPal.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">4. Como rastrear meu pedido?</div>
-      <div class="faq-answer">Você pode rastrear seu pedido na seção "Meus Pedidos" do aplicativo. Informações de rastreamento são atualizadas em tempo real.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">5. Posso devolver um produto?</div>
-      <div class="faq-answer">Sim, temos uma política de devolução de 7 dias. Consulte a seção "Política de Devolução" para mais detalhes.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question">6. Como entro em contato com o suporte?</div>
-      <div class="faq-answer">Você pode entrar em contato conosco por meio da seção "Ajuda" no aplicativo ou enviando um e-mail para suporte@litokshop.com.</div>
-    </div>
-  </main>
-  <footer>
-    &copy; 2024 LitokShop. Todos os direitos reservados.
-  </footer>
+  <input 
+    type="text" 
+    id="filterInput" 
+    placeholder="Pesquise por uma pergunta..." 
+    aria-label="Filtrar perguntas"
+  />
+
+  <div id="faqContainer"></div>
+
   <script>
-    // Adiciona funcionalidade para expandir/contrair as respostas
+    // JSON com perguntas e respostas
+    const faqData = [
+      {
+        question: "O que é o LitokShop?",
+        answer: "LitokShop é um aplicativo de compras online que oferece uma ampla variedade de produtos com preços acessíveis e entrega rápida."
+      },
+      {
+        question: "Como faço para criar uma conta?",
+        answer: "Você pode criar uma conta clicando em 'Registrar' na página inicial do aplicativo e preenchendo os dados solicitados."
+      },
+      {
+        question: "Quais métodos de pagamento são aceitos?",
+        answer: "Aceitamos pagamentos via cartão de crédito, transferência bancária e métodos digitais como PayPal."
+      },
+      {
+        question: "Como rastrear meu pedido?",
+        answer: "Você pode rastrear seu pedido na seção 'Meus Pedidos' do aplicativo. Informações de rastreamento são atualizadas em tempo real."
+      },
+      {
+        question: "Posso devolver um produto?",
+        answer: "Sim, temos uma política de devolução de 7 dias. Consulte a seção 'Política de Devolução' para mais detalhes."
+      },
+      {
+        question: "Como entro em contato com o suporte?",
+        answer: "Você pode entrar em contato conosco por meio da seção 'Ajuda' no aplicativo ou enviando um e-mail para suporte@litokshop.com."
+      }
+    ];
+
+    // Renderizar perguntas e respostas no HTML
+    const faqContainer = document.getElementById('faqContainer');
+    faqData.forEach((item, index) => {
+      const faqItem = document.createElement('div');
+      faqItem.classList.add('faq-item');
+      faqItem.innerHTML = `
+        <div class="faq-question">${index + 1}. ${item.question}</div>
+        <div class="faq-answer">${item.answer}</div>
+        <div class="divider"></div>
+      `;
+      faqContainer.appendChild(faqItem);
+    });
+
+    // Adicionar funcionalidade de expandir/contrair
     document.querySelectorAll('.faq-question').forEach(question => {
       question.addEventListener('click', () => {
         const answer = question.nextElementSibling;
         answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    // Filtro de perguntas
+    const filterInput = document.getElementById('filterInput');
+    filterInput.addEventListener('input', () => {
+      const filterValue = filterInput.value.toLowerCase();
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const questionText = item.querySelector('.faq-question').innerText.toLowerCase();
+        if (questionText.includes(filterValue)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
       });
     });
   </script>
