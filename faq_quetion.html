@@ -5,15 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perguntas Frequentes - LitokShop</title>
   <style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
     body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
-      margin: 0;
-      padding: 20px;
+    
       background-color: #f4f4f4;
     }
     input[type="text"] {
-      width: 100%;
+      width: 98%;
       padding: 10px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
@@ -45,14 +48,17 @@
   </style>
 </head>
 <body>
-  <input 
-    type="text" 
-    id="filterInput" 
-    placeholder="Pesquise por uma pergunta..." 
-    aria-label="Filtrar perguntas"
-  />
+
+  <div style="padding: 10px;">
+    <input 
+        type="text" 
+        id="filterInput" 
+        placeholder="Pesquise por uma pergunta..." 
+        aria-label="Filtrar perguntas"
+    />
 
   <div id="faqContainer"></div>
+  </div>
 
   <script>
     // JSON com perguntas e respostas
